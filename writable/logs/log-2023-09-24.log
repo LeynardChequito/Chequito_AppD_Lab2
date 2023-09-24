@@ -350,3 +350,53 @@ WHERE `playlist`.`playlist_id` = :playlist.playlist_id:', [...], false)
  8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\Chequito_AppD\\Chequito_AppD_Lab2\\public\\index.php')
+ERROR - 2023-09-24 15:47:46 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'music_player' in C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\MySQLi\Connection.php:185
+Stack trace:
+#0 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\MySQLi\Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'music_player', 3306, '', 0)
+#1 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT `playlis...', Array, false)
+#4 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\app\Controllers\MainController.php(54): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\app\Controllers\MainController.php(42): App\Controllers\MainController->fetchPlaylistAndSongs('test')
+#8 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\CodeIgniter.php(919): App\Controllers\MainController->playlist('test')
+#9 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MainController))
+#10 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#12 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'music_player' in C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT `playlis...', Array, false)
+#3 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\app\Controllers\MainController.php(54): CodeIgniter\BaseModel->findAll()
+#6 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\app\Controllers\MainController.php(42): App\Controllers\MainController->fetchPlaylistAndSongs('test')
+#7 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\CodeIgniter.php(919): App\Controllers\MainController->playlist('test')
+#8 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MainController))
+#9 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\Chequito_AppD\Chequito_AppD_Lab2\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2023-09-24 15:47:46 --> Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'music_player'
+in SYSTEMPATH\Database\BaseConnection.php on line 427.
+ 1 SYSTEMPATH\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT `playlist`.`playlist_id`, `playlist`.`name`, `music`.`music_id`, `music`.`title`, `music`.`artist`, `music`.`file`
+FROM `playlist`
+JOIN `playlistmusic` ON `playlistmusic`.`playlist_id` = `playlist`.`playlist_id`
+JOIN `Music` ON `music`.`music_id` = `playlistMusic`.`music_id`
+WHERE `playlist`.`playlist_id` = :playlist.playlist_id:', [...], false)
+ 3 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\MainController.php(54): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\MainController.php(42): App\Controllers\MainController->fetchPlaylistAndSongs('test')
+ 7 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\MainController->playlist('test')
+ 8 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MainController))
+ 9 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\Chequito_AppD\\Chequito_AppD_Lab2\\public\\index.php')
