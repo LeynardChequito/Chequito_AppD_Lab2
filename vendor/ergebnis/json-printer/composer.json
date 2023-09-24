@@ -1,0 +1,57 @@
+{
+  "name": "ergebnis/json-printer",
+  "description": "Provides a JSON printer, allowing for flexible indentation.",
+  "license": "MIT",
+  "type": "library",
+  "keywords": [
+    "json",
+    "printer",
+    "formatter"
+  ],
+  "authors": [
+    {
+      "name": "Andreas Möller",
+      "email": "am@localheinz.com"
+    }
+  ],
+  "homepage": "https://github.com/ergebnis/json-printer",
+  "support": {
+    "issues": "https://github.com/ergebnis/json-printer/issues",
+    "source": "https://github.com/ergebnis/json-printer"
+  },
+  "require": {
+    "php": "^8.0",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "ergebnis/license": "^2.0.0",
+    "ergebnis/php-cs-fixer-config": "^4.11.0",
+    "fakerphp/faker": "^1.20.0",
+    "infection/infection": "~0.26.6",
+    "phpunit/phpunit": "^9.5.26",
+    "psalm/plugin-phpunit": "~0.18.3",
+    "vimeo/psalm": "^4.30.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ergebnis\\Json\\Printer\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ergebnis\\Json\\Printer\\Test\\": "test/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "infection/extension-installer": true
+    },
+    "platform": {
+      "php": "8.0.25"
+    },
+    "preferred-install": "dist",
+    "sort-packages": true
+  }
+}
