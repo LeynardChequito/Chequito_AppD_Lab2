@@ -10,10 +10,8 @@
 </head>
 <body>
 
-
 <!-- Select Playlist Modal -->
 <?= $this->include('/app/Views/Additional/SelectPlaylist.php') ?>
-
 
 <form action="/" method="get">
   <input type="search" name="search" placeholder="Search song" value="<?= isset($searchQuery) ? $searchQuery : '' ?>">
@@ -37,21 +35,16 @@
   <?php endforeach; ?>
 </ul>
 
+<!-- Include your modal views here -->
+<?= $this->include('Additional/CreateP.php') ?>
+<?= $this->include('Additional/AddM.php') ?>
+<?= $this->include('Additional/AddP.php') ?>
 
-<?= $this->include('/app/Views/Additional/CreateP.php') ?>
-
-
-<?= $this->include('/app/Views/Additional/AddM.php') ?>
-
-
-<?= $this->include('/app/Views/Additional/AddP.php') ?>
-
-<!-- Javascript -->
-<?= $this->include('include/scriptEndTag.php') ?>
-
-<script src="/assets/js/script.js"></script>
+<!-- Include jQuery and Bootstrap JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Include your custom JavaScript -->
 <script src="/assets/js/script.js"></script>
 </body>
 </html>
