@@ -13,7 +13,7 @@ class Connection extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['playlist_id', 'music_id'];
+    protected $allowedFields    = ['playlist_id', 'song_id'];
 
     // Dates
     protected $useTimestamps = false;
