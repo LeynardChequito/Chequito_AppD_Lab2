@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2023 at 04:27 PM
+-- Generation Time: Sep 25, 2023 at 02:26 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.0.25
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `music_player`
+-- Database: `musicplayer`
 --
 
 -- --------------------------------------------------------
