@@ -8,3 +8,4 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('/view', 'MainController::view');
 $routes->post('/createPlaylist', 'MainController::createPlaylist');
+$routes->post('/addsong', 'MainController::addsong');

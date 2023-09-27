@@ -42,3 +42,34 @@ body {
          background-color: #007bff;
          color: #fff;
      }
+     form {
+    text-align: center;
+    margin: 20px;
+     }
+
+     /* Style the search input */
+  input[type="search"] {
+    padding: 10px;
+    width: 500px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  /* Style the search button */
+  button.btn-primary {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue color for the primary button */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 7px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Style the button on hover */
+  button.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+  }

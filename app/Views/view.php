@@ -12,16 +12,18 @@
     </style>
 </head>
 <body>
-
+    <!--add songs-->
+    <?= $this->include('views/addsongs.php') ?>
+    
     <!--create playlist-->
-    <?= $this->include('views/myplaylist.php') ?>
+    <?= $this->include('views/addtoplaylist.php') ?>
 
     <!--mismong itsura ng music player-->
-    <?= $this->include('views/mainmediaplayer.php')?>
+    <?= $this->include('views/mainview.php')?>
 
 
     <!--add to playlist-->
-    <?= $this->include('views/addtoplaylist.php') ?>
+    <?= $this->include('views/playlist.php') ?>
 
     <!--modals-->
     <?= $this->include('views/modals.php') ?>
