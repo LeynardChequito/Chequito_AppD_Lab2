@@ -3,115 +3,178 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+
 class MainController extends BaseController
 {
-    private $playlist;
-    public $upload;
-    public $song;
+    private $music;
+    private $listplay;
+    private $connection;
+    private $db;
 
-    // public function addsong()
-    // {
-
-    //     $validationRules = [
-    //         'song' => 'uploaded[song]|max_size[song,10240]|mime_in[song,audio/mpeg,audio/wav/mp3]',
-    //     ];
-    //     if ($this->validate($validationRules)) {
-
-
-    //         $song = $this->request->getFile('song');
-    //         $songname = $song->getName();
-    //         $newName = $song->getRandomName();
-    //         $song->move(ROOTPATH . 'uploads', $newName);
-    //         $data = [
-    //             'title' => $songname,
-    //             'file' => $newName,
-    //             //make sure tama names ng collumns
-    //         ];
-    //         $this->song->insert($data);
-    //         return redirect()->to('/view');
-    //     } else {
-    //         $data['validation'] = $this->validator;
-    //         echo "error";
-    //     }
-    // }
-    public function addsong()
-{
-    $validationRules = [
-        'song' => 'uploaded[song]|max_size[song,10240]|mime_in[song,audio/mpeg,audio/wav,audio/mp3]',
-    ];
-
-    if ($this->validate($validationRules)) {
-        $song = $this->request->getFile('song');
-
-        // Check if the file is valid
-        if ($song->isValid() && !$song->hasMoved()) {
-            $songname = $song->getName();
-            $newName = $song->getRandomName();
-
-            // Move the uploaded file to the 'uploads' directory
-            $song->move(ROOTPATH . 'uploads', $newName);
-
-            $data = [
-                'title' => $songname,
-                'file' => $newName,
-                // Add other relevant data to be stored in the database
-            ];
-
-            // Assuming $this->song represents your model or database table
-            $this->song->insert($data);
-
-            // Redirect to a view or a success page
-            return redirect()->to('/view');
-        } else {
-            // Handle errors related to file upload
-            echo "Error: Failed to upload the file.";
-        }
-    } else {
-        // Handle validation errors
-        $data['validation'] = $this->validator;
-        echo "Error: Validation failed.";
-    }
-}
-
-
-//     //upload music
-//     public function upload()
-//     {
-//         $musicFile = $this->request->getFile('file');
-
-//     if ($musicFile->isValid() && $musicFile->getExtension() == 'mp3') {
-//         $newName = $musicFile->getRandomName();
-//         $musicFile->move(ROOTPATH . 'public/uploads', $newName);
-
-//         return 'Music file uploaded successfully.';
-//     } else {
-//         return 'Invalid music file.';
-//     }
-// }
-    public function __construct()
-    {
-        $this->playlist = new \App\Models\playlist();
-        $this->songs = new \App\Models\songs();
-    }
-    
-    public function view()
-    {
-        $data = [
-            'playlist' => $this->playlist->findAll(),
-            'songs' => $this->songs->findAll(),
-        ];
-        return view('view', $data);
-    }
-    public function createPlaylist(){
-        $data = [
-            'name' => $this->request->getVar('pname'),
-        ];
-        $this->playlist->save($data);
-        return redirect()->to('/view');
-    }
-    
     public function index()
     {
         //
+    }
+
+    public function __construct()
+    {
+        $this->music = new \App\Models\Music();
+        $this->listplay = new \App\Models\gad();
+        $this->sconnection = new \App\Models\connection();
+        $this->db = \Config\Database::connect();
+        helper('form');
+    }
+
+    public function mainview()
+    {
+        $context = 'home';
+        $data = [
+            'listplay' => $this->listplay->findAll(),
+            'music' => $this->music->findAll(),
+            'context' => $context,
+        ];
+        return view('mainview', $data);
+    }
+
+
+    public function doupload()
+{
+    $file = $this->request->getFile('song');
+    $newFileName = $file->getRandomName();
+
+    $data = [
+        'title' => pathinfo($file->getName(), PATHINFO_FILENAME), 
+        'file' => $newFileName,
+        'duration' => 0, 
+    ];
+
+    $tuntunin = [
+        'song' => [
+            'uploaded[song]',
+            'mime_in[song,audio/mpeg]',
+            'max_size[song,10240]',
+            'ext_in[song,mp3]',
+        ],
+    ];
+
+    if ($this->validate($tuntunin)) {
+        if ($file->isValid() && !$file->hasMoved()) {
+            if ($file->move(FCPATH . 'uploads\songs', $newFileName)) {
+                
+                $this->music->save($data);
+                echo 'File uploaded successfully';
+            } else {
+                echo $file->getErrorString() . ' ' . $file->getError();
+            }
+        }
+    } else {
+        $data['validation'] = $this->validator;
+    }
+
+    return redirect()->to('/mainview');
+}
+
+
+
+public function addToPlaylist()
+{
+    $musicID = $this->request->getPost('musicID');
+    $playlistID = $this->request->getPost('playlist');
+    $data = [
+        'playlist_id' => $playlistID,
+        'music_id' => $musicID
+    ];
+    $this->db->table('connection')->insert($data);
+    return redirect()->to('/mainview');
+}
+
+    public function removeFromPlaylist($musicID)
+    {
+
+        $builder = $this->db->table('connection ');
+        $builder->where('id', $musicID);
+        $builder->delete();
+
+        return redirect()->to('/mainview');
+    }
+
+    public function create_playlist()
+    {
+        $data = [
+            'name' => $this->request->getVar('playlist_name'),
+            'music' => $this->music->findAll(),
+        ];
+
+        $this->listplay->insert($data);
+        return redirect()->to('/mainview');
+    }
+
+    public function delete_playlist($playlistID)
+    {
+        // Find the playlist by its ID
+        $playlist = $this->listplay->find($playlistID);
+        if ($playlist) {
+            $this->listplay->where('playlist_id', $playlistID)->delete('listplay');
+            $this->listplay->delete($playlistID);
+        }
+        return redirect()->to('/mainview');
+    }
+
+    public function viewPlaylist($playlistID)
+    {
+        $context = 'playlist';
+
+        $builder = $this->db->table('connection ');
+
+        $builder->select('connection .id, music.*');
+
+        $builder->join('music', 'music.music_id = connection.music_id');
+
+        $builder->where('connection .playlist_id', $playlistID);
+
+        $musicInPlaylist = $builder->get()->getResultArray();
+
+        $data = [
+            'music' => $musicInPlaylist,
+            'listplay' => $this->listplay->findAll(),
+            'context' => $context,
+        ];
+
+        return view('mainview', $data);
+    }
+
+    public function search()
+    {
+        $searchTerm = $this->request->getGet('search');
+        $context = $this->request->getGet('context');
+        $builder = $this->db->table('music');
+
+        if ($context === 'home') {
+
+            // Search all songs
+            $builder->like('title', $searchTerm);
+        } elseif ($context === 'playlist') {
+
+            // Search songs in the current playlist
+            $playlistID = $this->request->getGet('playlistID');
+            $builder
+                ->join('connection ', 'connection .music_id = music.music_id')
+                ->where('connection .playlist_id', $playlistID)
+                ->like('music.title', $searchTerm);
+        } else {
+            
+        }
+
+
+        $results = $builder->get()->getResultArray();
+
+    
+        $data = [
+            'music' => $results,
+            'listplay' => $this->listplay->findAll(),
+            'context' => $context,
+        ];
+
+        return view('mainview', $data);
     }
 }

@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Connection extends Model
+class connection extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'connection_';
+    protected $table            = 'connection';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['playlist_id', 'song_id'];
+    protected $allowedFields    = ['playlist_id', 'music_id'];
 
     // Dates
     protected $useTimestamps = false;
